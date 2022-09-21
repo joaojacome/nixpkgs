@@ -90,10 +90,6 @@ in {
       ../development/compilers/adoptopenjdk-bin/jdk16-linux.nix
       ../development/compilers/adoptopenjdk-bin/jdk16-darwin.nix;
 
-    adoptopenjdk-17 = mkAdoptopenjdk
-      ../development/compilers/adoptopenjdk-bin/jdk17-linux.nix
-      ../development/compilers/adoptopenjdk-bin/jdk17-darwin.nix;
-
     openjdk8-bootstrap = mkBootstrap adoptopenjdk-8
       ../development/compilers/openjdk/bootstrap.nix
       { version = "8"; };
@@ -127,7 +123,7 @@ in {
         inherit openjdk15-bootstrap;
       });
 
-    openjdk17-bootstrap = mkBootstrap adoptopenjdk-17
+    openjdk17-bootstrap = mkBootstrap adoptopenjdk-16
       ../development/compilers/openjdk/16.nix
       (bootstrapArgs // {
         inherit openjdk16-bootstrap;

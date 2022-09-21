@@ -1,24 +1,16 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, jetbrains
-, openjdk17
-}:
+{ lib, openjdk11, fetchFromGitHub, jetbrains }:
 
-openjdk17.overrideAttrs (oldAttrs: rec {
+openjdk11.overrideAttrs (oldAttrs: rec {
   pname = "jetbrains-jdk";
-  version = "17.0.3-b469.37";
+  version = "11_0_13-b1751.25";
 
   src = fetchFromGitHub {
     owner = "JetBrains";
     repo = "JetBrainsRuntime";
     rev = "jb${version}";
-    hash =
-     # Upstream issue: https://github.com/JetBrains/JetBrainsRuntime/issues/163
-     if stdenv.isDarwin then "sha256-ExRvjs53rIuhUx4oCgAqu1Av3CNAgmE1ZlN0srEh3XM="
-     else "sha256-O+OIDRJcIsb/vhO2+SYuYdUYWYTGkBcQ9cHTExLIFDE=";
+    sha256 = "sha256-TPNYZUkAoiZfp7Ci3fslKnRNGY1lnyIhXYUt6J31lwI=";
   };
-
+  patches = [];
   meta = with lib; {
     description = "An OpenJDK fork to better support Jetbrains's products.";
     longDescription = ''
@@ -33,10 +25,9 @@ openjdk17.overrideAttrs (oldAttrs: rec {
      your own risk.
     '';
     homepage = "https://confluence.jetbrains.com/display/JBR/JetBrains+Runtime";
-    inherit (openjdk17.meta) license platforms mainProgram;
+    inherit (openjdk11.meta) license platforms mainProgram;
     maintainers = with maintainers; [ edwtjo ];
   };
-
   passthru = oldAttrs.passthru // {
     home = "${jetbrains.jdk}/lib/openjdk";
   };
